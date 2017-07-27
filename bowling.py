@@ -8,14 +8,16 @@ def score(game):
         else:
             result += get_value(game[i])
         if frame < 10  and get_value(game[i]) == 10:
+            next_roll = game[i + 1]
+            next_to_next_roll = game[i + 2]
             if game[i] == '/':
-                result += get_value(game[i+1])
+                result += get_value(next_roll)
             elif game[i] == 'X' or game[i] == 'x':
-                result += get_value(game[i+1])
+                result += get_value(next_roll)
                 if game[i+2] == '/':
-                    result += 10 - get_value(game[i+1])
+                    result += 10 - get_value(next_roll)
                 else:
-                    result += get_value(game[i+2])
+                    result += get_value(next_to_next_roll)
         last = get_value(game[i])
         if not in_first_half:
             frame += 1
