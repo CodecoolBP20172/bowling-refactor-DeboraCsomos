@@ -17,12 +17,11 @@ def score(game):
                 else:
                     result += get_value(next_to_next_roll)
         last = get_value(game[i])
-        if not in_first_half:
-            frame += 1
         if in_first_half:
             in_first_half = False
         else:
             in_first_half = True
+            frame += 1
         if game[i] in 'Xx':
             in_first_half = True
             frame += 1
