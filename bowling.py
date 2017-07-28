@@ -4,29 +4,30 @@ def score(game):
     in_first_half = True
     for i in range(len(game)):
         if game[i] == '/':
-            result += 10 - last
+            result += get_value(game[i]) - last
         else:
             result += get_value(game[i])
-        if frame < 10  and get_value(game[i]) == 10:
+        if frame < 10 and game[i] in "Xx/":
             next_roll = game[i + 1]
             next_to_next_roll = game[i + 2]
             result += get_value(next_roll)
-            if game[i] == 'X' or game[i] == 'x':
-                if game[i+2] == '/':
-                    result += 10 - get_value(next_roll)
+            if game[i] in 'Xx':
+                if next_to_next_roll == '/':
+                    result += get_value(next_to_next_roll) - get_value(next_roll)
                 else:
                     result += get_value(next_to_next_roll)
         last = get_value(game[i])
         if not in_first_half:
             frame += 1
-        if in_first_half == True:
+        if in_first_half:
             in_first_half = False
         else:
             in_first_half = True
-        if game[i] == 'X' or game[i] == 'x':
+        if game[i] in 'Xx':
             in_first_half = True
             frame += 1
     return result
+
 
 def get_value(char):
     if char in '123456789':
