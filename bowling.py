@@ -15,6 +15,17 @@ def is_number(char):
         return True
     return False
 
+def frame_counting(frame, in_first_half, char):
+    if in_first_half:
+        in_first_half = False
+    else:
+        in_first_half = True
+        frame += 1
+    if is_strike(char):
+        in_first_half = True
+        frame += 1
+    return frame, in_first_half
+
 
 def score(game):
     result = 0
@@ -36,14 +47,7 @@ def score(game):
                 else:
                     result += get_value(next_to_next_roll)
         last = get_value(char)
-        if in_first_half:
-            in_first_half = False
-        else:
-            in_first_half = True
-            frame += 1
-        if is_strike(char):
-            in_first_half = True
-            frame += 1
+        frame, in_first_half = frame_counting(frame, in_first_half, char)
     return result
 
 
