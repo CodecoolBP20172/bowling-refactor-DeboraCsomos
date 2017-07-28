@@ -16,7 +16,7 @@ def is_spare(char):
     is a spare or not
 
     returns a boolean value
-    """    
+    """
     if char is "/":
         return True
     return False
@@ -28,7 +28,7 @@ def is_number(char):
     is just a normal score
 
     returns a boolean value
-    """    
+    """
     if char in "123456789":
         return True
     return False
