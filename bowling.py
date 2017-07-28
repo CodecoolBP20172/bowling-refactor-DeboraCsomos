@@ -1,39 +1,58 @@
+def is_strike(char):
+    if char in "Xx":
+        return True
+    return False
+
+
+def is_spare(char):
+    if char is "/":
+        return True
+    return False
+
+
+def is_number(char):
+    if char in "123456789":
+        return True
+    return False
+
+
 def score(game):
     result = 0
     frame = 1
     in_first_half = True
     for i in range(len(game)):
-        if game[i] == '/':
-            result += get_value(game[i]) - last
-        else:
-            result += get_value(game[i])
-        if frame < 10 and game[i] in "Xx/":
+        char = game[i]
+        if is_spare(char):
+            result += get_value(char) - last
+        elif is_number(char) or is_strike(char):
+            result += get_value(char)
+        if frame < 10 and is_strike(char) or is_spare(char):
             next_roll = game[i + 1]
             next_to_next_roll = game[i + 2]
             result += get_value(next_roll)
-            if game[i] in 'Xx':
-                if next_to_next_roll == '/':
+            if is_strike(char):
+                if is_spare(next_to_next_roll):
                     result += get_value(next_to_next_roll) - get_value(next_roll)
                 else:
                     result += get_value(next_to_next_roll)
-        last = get_value(game[i])
+        last = get_value(char)
         if in_first_half:
             in_first_half = False
         else:
             in_first_half = True
             frame += 1
-        if game[i] in 'Xx':
+        if is_strike(char):
             in_first_half = True
             frame += 1
     return result
 
 
 def get_value(char):
-    if char in '123456789':
+    if is_number(char):
         return int(char)
-    elif char in "Xx/":
+    if is_strike(char) or is_spare(char):
         return 10
-    elif char == '-':
+    elif char is '-':
         return 0
     else:
         raise ValueError()
